@@ -33,19 +33,7 @@
 <!-- jquery ui -->
 
 <!-- call js -->
-<script src="../Controller/main-function.js"></script>
-<script src="../Controller/address_info.js"></script>
-<script src="../Controller/campiagn_info.js"></script>
-<script src="../Controller/campign_email.js"></script>
-<script src="../Controller/customer_info.js"></script>
-<script src="../Controller/emp_info.js"></script>
-<script src="../Controller/history_contact_info.js"></script>
-<script src="../Controller/history_order.js"></script>
-<script src="../Controller/history_payment.js"></script>
-<script src="../Controller/rating_info.js"></script>
-
 <script src="../Controller/main.js"></script>
-<script src="../Controller/dropDownListSelectMutiDefault.js"></script>
 <script src="../Utility/jqueryUi/jquery.multiselect.js"></script>
 <link href="../Utility/jqueryUi/jquery.multiselect.css" rel="stylesheet" />
 <!-- call js -->
@@ -109,18 +97,7 @@
 			
 			
 		</div>
-
-<!-- <h3>Segment Type</h3>
-<table>
-	<tr>
-		<td>
-		<input checked type="radio" name="segmentType" id="segment" class="segmentType" value="segment"> SEGMENT
-		<input type="radio" name="segmentType" id="sms" class="segmentType" value="sms"> SMS	
-		<input type="radio" name="segmentType" id="mail" class="segmentType" value="mail"> MAIL	
-		<input type="radio" name="segmentType" id="insurance" class="segmentType" value="insurance"> INSURANCE 	
-		</td>
-	</tr>
-</table>	 -->	
+		
 <div id="mainBody">
 </div>
 
@@ -1228,18 +1205,16 @@
 							
 						</select>
 					</td>
-					
 					<td>Payment Date From  
 					</td>
 					<td>
-						<input type="text" name="paramPaymentDateStart" id="paramPaymentDateStart" value="All" class="date">
+						<input type="text" name="paramPaymentDateFrom" id="paramPaymentDateFrom" value="All" class="date">
 					</td>
 					<td>Payment Date To 
 					</td>
 					<td>
-						<input type="text" name="paramPaymentDateEnd " id="paramPaymentDateEnd" value="All" class="date">
+						<input type="text" name="paramPaymentDateTo" id="paramPaymentDateTo" value="All" class="date">
 					</td>
-					 
 				</tr>
 			</table>
 			</center>
@@ -1342,7 +1317,11 @@
 					</td>
 					<td id="areaparamCalloutCampaignStatus">
 						<select id="paramCalloutCampaignStatus" name="paramCalloutCampaignStatus"  class="mutiSelect" multiple="multiple">
-
+							
+							
+							
+							
+							
 						</select>
 					</td>
 				</tr>
@@ -1480,8 +1459,6 @@
 						</select>
 					</td>
 				</tr>
-				
-				
 			
 			</table>
 			</center>
@@ -1535,26 +1512,11 @@
 	</div>
 	<div id="footerButton">
 		
-		<table style="background:#F2F5F7;">
-		 
-			
+		<table style="background:#F2F5F7;" width="100%">
 			<tr >
-				<td>ชื่อไฟล์</td> 
-				<td>
-				<input type="text" name="paramFileName" id ="paramFileName" value="Report_Segment" size="30"><span style="color:red">(ห้ามใส่ภาษาไทย,ห้ามเว้นวรรค)</span>
-				</td>
-			<tr>
-				<td>
-				จำนวนแถวที่ต้องการ
-				</td>
-				<td>
-				 <input type="text" name="paramDataLimit" id ="paramDataLimit" value="100000"><span id="resultCountData"></span>
-				</td>
+				<td>จำนวนแถวที่ต้องการ <input type="text" name="paramDataLimit" id ="paramDataLimit" value="100000"><span id="resultCountData"></span></td>
 				
 			</tr>
-		</table>
-		
-		<table>		
 			<tr>
 				<td>
 				<button id="submit" class="buttonN ">ตกลง</button><!--  <button id="cancle" class="buttonN ">ยกเลิก</button>-->

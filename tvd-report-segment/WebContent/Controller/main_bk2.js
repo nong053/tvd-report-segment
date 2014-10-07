@@ -1,16 +1,5 @@
 
 $(document).ready(function(){
-	//check type segment start
-	//alert("HELLO 1");
-//	$(".segmentType").click(function(){
-//		//alert("hello 2");
-//		console.log(this.id);
-//		$("#embedSegmentType").remove();
-//		$("body").append("<input type=\"text\" id=\"embedSegmentType\" value=\""+this.id+"\">");
-//	});
-//	$(".segmentType").click();
-	//check type segment end
-	
 	var setTable = function(){
 	//set table start
 	$("table.tableParam tr").each(function(){
@@ -214,7 +203,765 @@ $(document).ready(function(){
 	 */
 	 //campaign mail end
 	 //SET DATE END
+	 
+	 //function create drowdown area start
+	 var createDropdrownList = function(id,data,option){
+		 var htmlSelect="";
+		 if(option['typeValue']=="single"){
+			 htmlSelect+="<select id=\""+id+"\" name=\""+id+"\"  class=\"singleSelect\">"; 
+			 }else{
+			 htmlSelect+="<select id=\""+id+"\" name=\""+id+"\"  class=\"mutiSelect\" multiple=\"multiple\">";	 
+			 }
+		 if(option['filed']==2){
+		 $.each(data,function(index,indexEntry){
+			if(option['valueDefalult']){ 
+			 if(option['valueDefalult']==indexEntry[0]){
+				 htmlSelect+="<option selected value=\""+indexEntry[0]+"\">"+indexEntry[1]+"</option>";
+			 }else{
+				 htmlSelect+="<option value=\""+indexEntry[0]+"\">"+indexEntry[1]+"</option>";
+			 }
+			}else{
+				
+				if("All"==indexEntry[0]){
+					 htmlSelect+="<option selected value=\""+indexEntry[0]+"\">"+indexEntry[1]+"</option>";
+				 }else{
+					 htmlSelect+="<option value=\""+indexEntry[0]+"\">"+indexEntry[1]+"</option>";
+				 }	
+				
+			}
+			 
+			 /*
+				 if(indexEntry[0]=="All"){
+				 htmlSelect+="<option selected value=\""+indexEntry[0]+"\">"+indexEntry[1]+"</option>";
+				 }else{
+				 htmlSelect+="<option value=\""+indexEntry[0]+"\">"+indexEntry[1]+"</option>";
+				 }
+			*/
+		 });
+		 }else if(option['filed']==1){
+			 $.each(data,function(index,indexEntry){
+				 
+				 if(option['valueDefalult']){ 
+					 if(option['valueDefalult']==indexEntry[0]){
+						 htmlSelect+="<option selected value=\""+indexEntry[0]+"\">"+indexEntry[0]+"</option>";
+					 }else{
+						 htmlSelect+="<option value=\""+indexEntry[0]+"\">"+indexEntry[0]+"</option>";
+					 }
+					}else{
+						
+						if("All"==indexEntry[0]){
+							 htmlSelect+="<option selected value=\""+indexEntry[0]+"\">"+indexEntry[0]+"</option>";
+						 }else{
+							 htmlSelect+="<option value=\""+indexEntry[0]+"\">"+indexEntry[0]+"</option>";
+						 }	
+						
+					}
+				 
+				 /*
+				 if(indexEntry[0]=="All"){
+				 htmlSelect+="<option selected value=\""+indexEntry[0]+"\">"+indexEntry[0]+"</option>";
+				 }else{
+				 htmlSelect+="<option value=\""+indexEntry[0]+"\">"+indexEntry[0]+"</option>";
+				 }
+				 */
+			
+			 });
+			 
+		 }
+		 htmlSelect+="</select>";
+		 //alert(htmlSelect);
+		 //alert(option);
+		 $("td#area"+id+"").html(htmlSelect);
+		 $(".mutiSelect").multiselect({
+			   header: false
+			});
+		 
+		 
+	 };
+	 var createDropdrownListCastCase = function(id,data,option){
+		 var htmlSelect="";
+		 if(option['typeValue']=="single"){
+		 htmlSelect+="<select id=\""+id+"\" name=\""+id+"\"  class=\"singleSelect\" multiple=\"multiple\">"; 
+		 }else{
+		 htmlSelect+="<select id=\""+id+"\" name=\""+id+"\"  class=\"mutiSelect\" multiple=\"multiple\">";	 
+		 }
+		 
+		 if(option['filed']==2){
+		 $.each(data,function(index,indexEntry){
+			 
+			 
+				 if(indexEntry[0]==option['valueDefalult']){
+				 htmlSelect+="<option selected value=\""+indexEntry[0]+"\">"+indexEntry[1]+"</option>";
+				 }else{
+				 htmlSelect+="<option value=\""+indexEntry[0]+"\">"+indexEntry[1]+"</option>";
+				 }
+			
+		 });
+		 }else if(option['filed']==1){
+			 $.each(data,function(index,indexEntry){
+				 
+				 
+				 if(indexEntry[0]==option['valueDefalult']){
+				 htmlSelect+="<option selected value=\""+indexEntry[0]+"\">"+indexEntry[0]+"</option>";
+				 }else{
+				 htmlSelect+="<option value=\""+indexEntry[0]+"\">"+indexEntry[0]+"</option>";
+				 }
+			
+			 });
+			 
+		 }
+		 htmlSelect+="</select>";
+		 //alert(htmlSelect);
+		 //alert(option);
+		 $("td#area"+id+"").html(htmlSelect);
+		 $("select").multiselect({
+			   header: false
+			});
+		 
+		 
+	 };
+	 
+	 //createDropdrownList();
+	 var callAjaxForDropDrowList = function(fileName,option){
+		 
+		 $.ajax({
+			url:"../Model/"+fileName+".jsp",
+			type:"get",
+			async:false,
+			dataType:"json",
+			success:function(data){
+				createDropdrownList("param"+fileName+"",data,option);
+			}
+		 });
+	 };
+	 
+	 //mail campiagn parameter defualt start
+	 var callAjaxForDropDrowListMailCampaign = function(fileName,option){
 	
+		 $.ajax({
+			url:"../Model/"+fileName+".jsp",
+			type:"get",
+			async:false,
+			dataType:"json",
+			data:{"MailCampaignCerateDateStartParam":option['MailCampaignCerateDateStartParam']+"","MailCampaignCerateDateEndParam":option['MailCampaignCerateDateEndParam']+""},
+			success:function(data){
+				createDropdrownList("param"+fileName+"",data,option);
+			}
+		 });
+	 };
+	//mail campiagn parameter end
+	 
+	 //mail program parameter defualt start
+	 var callAjaxForDropDrowListMailProgram = function(fileName,option){
+	
+		 $.ajax({
+			url:"../Model/"+fileName+".jsp",
+			type:"get",
+			async:false,
+			dataType:"json",
+			data:{"MailCampaignParam":option['MailCampaignParam']+""},
+			success:function(data){
+				createDropdrownList("param"+fileName+"",data,option);
+			}
+		 });
+	 };
+	//mail program parameter end
+	 
+	 
+	 
+	 //CalloutCampaign  parameter defualt start
+	 var callAjaxForDropDrowListCalloutCampaign = function(fileName,option){
+	
+		 $.ajax({
+			url:"../Model/"+fileName+".jsp",
+			type:"get",
+			async:false,
+			dataType:"json",
+			data:{"CallOutCampaignCerateDateStartParam":option['CallOutCampaignCerateDateStartParam'],"CallOutCampaignCerateDateEndParam":option['CallOutCampaignCerateDateEndParam']},
+			success:function(data){
+				createDropdrownList("param"+fileName+"",data,option);
+			}
+		 });
+	 };
+	//CalloutCampaign Parameter End
+	
+	
+	 //CalloutProgram  parameter defualt start
+	 var callAjaxForDropDrowListCalloutProgram = function(fileName,option){
+		 
+		 //alert(option['CalloutCampaignParam']);
+		 var CalloutCampaignParam=""+option['CalloutCampaignParam']+"";
+		 //alert(CalloutCampaignParam);
+		 $.ajax({
+			url:"../Model/"+fileName+".jsp",
+			type:"get",
+			async:false,
+			dataType:"json",
+			//data:{"CalloutCampaignParam1":CalloutCampaignParam},
+			data:{"CalloutCampaignParam":CalloutCampaignParam},
+			success:function(data){
+				//alert(data);
+				if(data!=null){
+					createDropdrownList("param"+fileName+"",data,option);
+				}
+				
+			}
+		 });
+	 };
+	//CalloutProgram Parameter End
+	 
+	 
+	 
+	 
+	 //CastCase DropdrownList CustomerStatus
+	 var callAjaxForDropDrowListCustomerStatus = function(fileName,option){
+		 
+		 $.ajax({
+				url:"../Model/"+fileName+".jsp",
+				type:"get",
+				async:false,
+				dataType:"json",
+				success:function(data){
+					
+					createDropdrownListCastCase("param"+fileName+"",data,option);
+					option=[];
+					option['filed']=2;
+					option['valueDefalult']=25;
+					option['parameter']="'"+$("#paramCustomerStatus option:selected").val()+"'";
+					callAjaxForDropDrowListSubStatus("CustomerSubStatus",option);
+				}
+			 });
+		 
+		 
+	 };
+	 
+	 var callAjaxForDropDrowListSubStatus = function(fileName,option){
+		 
+		 $.ajax({
+				url:"../Model/"+fileName+".jsp",
+				type:"get",
+				async:false,
+				dataType:"json",
+				data:{"CustomerStatusParam":option['parameter']},
+				success:function(data){
+					//alert(data);
+					createDropdrownList("param"+fileName+"",data,option);
+				}
+			 });
+		 
+		 
+	 };
+	 //CastCase DropdrownList CallType
+	 var callAjaxForDropDrowListCallType = function(fileName,option){
+		 
+		 $.ajax({
+				url:"../Model/"+fileName+".jsp",
+				type:"get",
+				async:false,
+				dataType:"json",
+				success:function(data){
+					createDropdrownListCastCase("param"+fileName+"",data,option);
+					option=[];
+					option['filed']=1;
+					option['parameter']="'"+$("#paramCallType option:selected").val()+"'";
+					callAjaxForDropDrowListCallAbnormolly("CallAbnormolly",option);
+				}
+			 });
+		 
+		 
+	 };
+	 
+	 var callAjaxForDropDrowListCallAbnormolly = function(fileName,option){
+		 
+		 $.ajax({
+				url:"../Model/"+fileName+".jsp",
+				type:"get",
+				async:false,
+				dataType:"json",
+				data:{"CallTypeNameParam":option['parameter']},
+				success:function(data){
+					//alert(data);
+					createDropdrownList("param"+fileName+"",data,option);
+				}
+			 });
+		 
+		 
+	 };
+	 
+	 
+	 var callAjaxForDropDrowListRegion = function(fileName,option){
+		 
+		 $.ajax({
+				url:"../Model/"+fileName+".jsp",
+				type:"get",
+				async:false,
+				dataType:"json",
+				success:function(data){
+					createDropdrownListCastCase("param"+fileName+"",data,option);
+					option=[];
+					option['filed']=2;
+					option['parameter']="'"+$("#paramRegion option:selected").val()+"'";
+					callAjaxForDropDrowListProvince("Province",option);
+				}
+			 });
+		 
+		 
+	 };
+	 var callAjaxForDropDrowListProvince = function(fileName,option){
+		 
+		 $.ajax({
+				url:"../Model/"+fileName+".jsp",
+				type:"get",
+				async:false,
+				dataType:"json",
+				data:{"regionParam":option['parameter']+""},
+				success:function(data){
+					//alert(data);
+					createDropdrownList("param"+fileName+"",data,option);
+				}
+			 });
+		 
+		 
+	 };
+	 
+	 //CastCase DropdrownList NotCallType
+	 var callAjaxForDropDrowListNotCallType = function(fileName,option){
+		 
+		 $.ajax({
+				url:"../Model/"+fileName+".jsp",
+				type:"get",
+				async:false,
+				dataType:"json",
+				success:function(data){
+					createDropdrownListCastCase("param"+fileName+"",data,option);
+					option=[];
+					option['filed']=1;
+					option['parameter']="'"+$("#paramNotCallType option:selected").val()+"'";
+					callAjaxForDropDrowListNotCallAbnormolly("NotCallAbnormolly",option);
+				}
+			 });
+		 
+		 
+	 };
+	 
+	 var callAjaxForDropDrowListNotCallAbnormolly = function(fileName,option){
+		 
+		 $.ajax({
+				url:"../Model/"+fileName+".jsp",
+				type:"get",
+				async:false,
+				dataType:"json",
+				data:{"NotCallAbnormollyParam":option['parameter']},
+				success:function(data){
+					//alert(data);
+					createDropdrownList("param"+fileName+"",data,option);
+				}
+			 });
+		 
+		 
+	 };
+	  
+	 
+	 //function create drowdown area end
+	 
+	 //function dropdown single list start
+	 	
+	 //function dropdown single list end
+	 
+	 //using parameter start
+	 var callParameterCustomerInfo = function(){
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CustomerPrefix",option);
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("CustomerType",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("Gender",option);
+	 option=[];
+	 option['filed']=2;
+	 //CastCase Start
+	 option['valueDefalult']=1;
+	 callAjaxForDropDrowListCustomerStatus("CustomerStatus",option);
+	 
+	 $("select#paramCustomerStatus").change(function(){
+		//alert("hellow"); 
+		option=[];
+		option['filed']=2;
+		var parameter="";
+		var i=0;
+		$("#paramCustomerStatus option:selected").each(function(){
+			//alert($(this).val());
+			if(i==0){
+			parameter+="'"+$(this).val()+"'";	
+			}else{
+			parameter+=",'"+$(this).val()+"'";
+			}
+			i++;
+		});
+		option['parameter']=parameter;
+		
+		callAjaxForDropDrowListSubStatus("CustomerSubStatus",option);
+	 });
+	 //CastCase End
+	 
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("BusineesType",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CustomerGrade",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CustomerSegment",option);
+	 option=[];
+	 option['filed']=2;
+	 option['valueDefalult']=13;
+	 callAjaxForDropDrowList("CustomerBirthMonthName",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CustomerCareer",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CreditCard",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("SMSFlag",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("PhoneFlag",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("MAILING_FLAG",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("EMAIL_FLAG",option);
+	 };
+	 
+	 
+	 //address info
+	 var callParameterAddressInfo = function(){
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("AccommodationType",option);
+	 /*
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("Region",option);
+	 */
+	 //CastCase Start
+	 option=[];
+	 option['filed']=2;
+	 option['valueDefalult']='All';
+	 callAjaxForDropDrowListRegion("Region",option);
+	 $("select#paramRegion").change(function(){
+			//alert("hellow"); 
+			option=[];
+			option['filed']=2;
+			var parameter="";
+			var i=0;
+			$("#paramRegion option:selected").each(function(){
+				if(i==0){
+				parameter+="'"+$(this).val()+"'";	
+				}else{
+				parameter+=",'"+$(this).val()+"'";
+				}
+				i++;
+			});
+			option['parameter']=parameter;
+			callAjaxForDropDrowListProvince("Province",option);
+		 });
+	 //CastCase End
+	 
+	 
+	 /*
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("Province",option);
+	 */
+	 
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("AddressType",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("AddressGrade",option);
+	 };
+	//emp info
+	 var callParameterEmpPloyeeInfo = function(){
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("SaleRep",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("Bu",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("EmpStatus",option);
+	 };
+	 //history contact info
+	 var callParameterHitoryContactInfo = function(){
+	 //CastCase Start
+	 option=[];
+	 option['filed']=1;
+	 option['valueDefalult']='All';
+	 callAjaxForDropDrowListCallType("CallType",option);
+	 $("select#paramCallType").change(function(){
+			//alert("hellow"); 
+			option=[];
+			option['filed']=1;
+			var parameter="";
+			var i=0;
+			$("#paramCallType option:selected").each(function(){
+				if(i==0){
+				parameter+="'"+$(this).val()+"'";	
+				}else{
+				parameter+=",'"+$(this).val()+"'";
+				}
+				i++;
+			});
+			option['parameter']=parameter;
+			callAjaxForDropDrowListCallAbnormolly("CallAbnormolly",option);
+		 });
+	 //CastCase End
+	 
+	 
+	 //callAjaxForDropDrowListNotCallType
+	//CastCase Start
+	 option=[];
+	 option['filed']=1;
+	 option['valueDefalult']='outbound';
+	 callAjaxForDropDrowListNotCallType("NotCallType",option);
+	 $("select#paramNotCallType").change(function(){
+			//alert("hellow"); 
+			option=[];
+			option['filed']=1;
+			var parameter="";
+			var i=0;
+			$("#paramNotCallType option:selected").each(function(){
+				if(i==0){
+				parameter+="'"+$(this).val()+"'";	
+				}else{
+				parameter+=",'"+$(this).val()+"'";
+				}
+				i++;
+			});
+			option['parameter']=parameter;
+			callAjaxForDropDrowListNotCallAbnormolly("NotCallAbnormolly",option);
+		 });
+	 
+	 
+	 //CastCase End
+	
+	 
+	 
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CallReson",option);
+	 
+	 //option=[];
+	 //option['filed']=1;
+	 //callAjaxForDropDrowList("CallAbnormolly",option);
+	 
+	 //option=[];
+	 //option['filed']=1;
+	 //callAjaxForDropDrowList("NotCallAbnormolly",option);
+	
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CallResultName",option);
+	 };
+	 
+	 //history order
+	 var callParameterHitoryOrderInfo = function(){
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("SalesChannel",option);
+	 
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("BuOrderType",option);
+	 
+	 
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("OrderStatus",option);
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("ShipmentStatus",option);
+	 };
+	 //history payment
+	 var callParameterHitoryPaymentInfo = function(){
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("PaymentTerm",option);
+	 };
+	 
+	 //campiagn info 
+	 var callParameterCampaignInfo = function(){
+	 option=[];
+	 option['filed']=1;
+	 option['typeValue']="single";
+	 callAjaxForDropDrowList("CalloutCampaignCreatedYear",option);
+	 
+	 option=[];
+	 option['filed']=2;
+	 option['valueDefalult']='-1';
+	 option['CallOutCampaignCerateDateStartParam']=$("#paramCalloutProgramCreatedDateStart").val();
+	 option['CallOutCampaignCerateDateEndParam']=$("#paramCalloutProgramCreatedDateEnd").val();
+	 
+	 //alert(option['CallOutCampaignCerateDateStartParam']);
+	 //alert(option['CallOutCampaignCerateDateEndParam']);
+	 callAjaxForDropDrowListCalloutCampaign("CalloutCampaign",option);
+	 
+	//castcase CalloutCampaign  start
+	 $("#paramCalloutProgramCreatedDateStart").change(function(){
+			//alert("hellow"); 
+			var parameter=$(this).val();
+			//alert(parameter);
+			option=[];
+			option['filed']=2;
+			option['CallOutCampaignCerateDateStartParam']=parameter;
+			option['CallOutCampaignCerateDateEndParam']=$("#paramCalloutProgramCreatedDateEnd").val();
+			 
+			callAjaxForDropDrowListCalloutCampaign("CalloutCampaign",option);
+		 });
+	 
+	 $("#paramCalloutProgramCreatedDateEnd").change(function(){
+			//alert("hellow"); 
+			var parameter=$(this).val();
+			//alert(parameter);
+			option=[];
+			option['filed']=2;
+			option['CallOutCampaignCerateDateStartParam']=$("#paramCalloutProgramCreatedDateStart").val();
+			option['CallOutCampaignCerateDateEndParam']=parameter;
+			 
+			callAjaxForDropDrowListCalloutCampaign("CalloutCampaign",option);
+		 });
+	 
+	 //castcase CalloutCampaign  end
+	 
+	 
+	 option=[];
+	 option['filed']=1;
+	 option['CalloutCampaignParam']=$("#paramCalloutCampaign").val();
+	
+	 callAjaxForDropDrowListCalloutProgram("CalloutProgram",option);
+	 option=[];
+	 
+    //castcase CalloutProgram start
+	 
+	 $("#paramCalloutCampaign").change(function(){
+		 
+		 var parameter=$(this).val();
+			
+			option=[];
+			option['filed']=1;
+			option['CalloutCampaignParam']=parameter;
+			//alert(option['CalloutCampaignParam']);
+			callAjaxForDropDrowListCalloutProgram("CalloutProgram",option);
+	 });
+	 
+	 //castcase CalloutProgram end
+	 
+	 option['filed']=2;
+	 callAjaxForDropDrowList("CalloutCampaignType",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CalloutCampaignStatus",option);
+	 };
+	 //campign email
+	 var callParameterCampaignEmailInfo = function(){
+	 option=[];
+	 option['filed']=1;
+	 option['typeValue']="single";
+	
+	 callAjaxForDropDrowList("MailCampaignCreatedYear",option);
+	 option=[];
+	 option['filed']=2;
+	 option['valueDefalult']=-1;
+	 option['MailCampaignCerateDateStartParam']=$("#paramMailProgramCreatedDateStart").val();
+	 option['MailCampaignCerateDateEndParam']=$("#paramMailProgramCreatedDateEnd").val();
+	 callAjaxForDropDrowListMailCampaign("MailCampaign",option);
+	 
+	 //castcase MailCampaign  start
+	 $("#paramMailProgramCreatedDateStart").change(function(){
+			//alert("hellow"); 
+			var parameter=$(this).val();
+			//alert(parameter);
+			option=[];
+			option['filed']=2;
+			option['MailCampaignCerateDateStartParam']=parameter;
+			option['MailCampaignCerateDateEndParam']=$("#paramMailProgramCreatedDateEnd").val();
+			 
+			callAjaxForDropDrowListMailCampaign("MailCampaign",option);
+		 });
+	 
+	 $("#paramMailProgramCreatedDateEnd").change(function(){
+			//alert("hellow"); 
+			var parameter=$(this).val();
+			//alert(parameter);
+			option=[];
+			option['filed']=2;
+			option['MailCampaignCerateDateStartParam']=$("#paramMailProgramCreatedDateStart").val();
+			option['MailCampaignCerateDateEndParam']=parameter;
+			 
+			callAjaxForDropDrowListMailCampaign("MailCampaign",option);
+		 });
+	 
+	 //castcase MailCampaign  end
+	 
+	 
+	 
+	 
+	 
+	 option=[];
+	 option['filed']=2;
+	 option['valueDefalult']=-1;
+	 callAjaxForDropDrowList("MailProgram",option);
+	 
+	 //castcase mail program start
+	 
+	 $("#paramMailCampaign").change(function(){
+		 
+		 var parameter=$(this).val();
+			//alert(parameter);
+			option=[];
+			option['filed']=2;
+			option['MailCampaignParam']=parameter;
+		    callAjaxForDropDrowListMailProgram("MailProgram",option);
+	 });
+	 
+	 //castcase mail program end
+	 
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("MailCampaignType",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("MailCampaignStatus",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("MailProgramStatus",option);
+	 };
+	
+	 //rating info
+	 var callParameterRatingInfo = function(){
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("ProductRatingGroup",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("Rating",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("NotRating",option);
+	 };
+	 
+
+	 
+	 
 	 
 	 //call paramer by click header title start
 	
@@ -573,10 +1320,6 @@ $(document).ready(function(){
 			$("#paramPaymentTerm option:selected").each(function(){
 				parameter+="&paramPaymentTerm="+$(this).val();
 			});
-			
-			parameter+="&paramPaymentDateStart="+$("#paramPaymentDateStart").val();
-			parameter+="&paramPaymentDateEnd="+$("#paramPaymentDateEnd").val();
-			
 			//history payment end
 			
 			//campiagn info start
@@ -671,10 +1414,6 @@ $(document).ready(function(){
 			//data limit start
 			parameter+="&paramDataLimit="+$("#paramDataLimit").val();
 			//date limit end
-			//file name start
-			parameter+="&paramFileName="+$("#paramFileName").val();
-			//file name end
-			parameter+="&paramSegmentType="+$("#embedSegmentType").val();
 			
 	 return parameter;
 	 };
@@ -725,7 +1464,7 @@ $(document).ready(function(){
 							//alert("Send Parameter Successfully \nPlease Check your Email about 1 Hour.");
 						
 						}else{
-							alert("Please wait... \nProcess other is Running");
+							alert("Process is Running\nPlease wait..");
 						}
 
 						
@@ -733,7 +1472,7 @@ $(document).ready(function(){
 						
 					}
 				 });
-		$("#loadText").text("Parameter Loading ...");
+		$("#loadText").text("Loading Parameter ...");
 	 });
 	 
 	 $("#cancle").click(function(){
