@@ -10,25 +10,12 @@ CalloutCampaign
 select CALLOUT_CAMPAIGN_KEY
 ,CAMPAIGN_NAME
 from
-(
-SELECT 
--1 as CALLOUT_CAMPAIGN_KEY , 0 AS sq
+(SELECT 
+-1 as CALLOUT_CAMPAIGN_KEY
 ,'All' as CAMPAIGN_NAME
 from dual
 UNION
-SELECT 
--2 as CALLOUT_CAMPAIGN_KEY, 1 as sq
-,'Y' as CAMPAIGN_NAME
-from dual
-UNION
-SELECT 
--3 as CALLOUT_CAMPAIGN_KEY, 2 as sq
-,'N' as CAMPAIGN_NAME
-from dual
-
-UNION
-
-select dcallpro.CALLOUT_CAMPAIGN_KEY  ,3 as sq
+select dcallpro.CALLOUT_CAMPAIGN_KEY 
 , dcallpro.CALLOUT_CAMPAIGN_CODE||' - '||dcallpro.CALLOUT_CAMPAIGN_NAME as CAMPAIGN_NAME
 from DIM_CALLOUT_CAMPAIGN dcallpro
 inner join (
@@ -40,7 +27,7 @@ inner join (
 			) factcallout on factcallout.CALLOUT_CAMPAIGN_KEY = dcallpro.CALLOUT_CAMPAIGN_KEY 
 order by CAMPAIGN_NAME
 )CALLOUT_CAMPAIGN
-order by sq,CAMPAIGN_NAME
+order by CAMPAIGN_NAME
 
 */
 String CallOutCampaignCerateDateStartParam = request.getParameter("CallOutCampaignCerateDateStartParam");
@@ -50,21 +37,11 @@ String CallOutCampaignCerateDateEndParam = request.getParameter("CallOutCampaign
     	  		  query+=" ,CAMPAIGN_NAME";
     	  		  query+=" from";
     	  		  query+=" (SELECT ";
-    	  		  query+=" -1 as CALLOUT_CAMPAIGN_KEY , 0 AS sq";
+    	  		  query+=" -1 as CALLOUT_CAMPAIGN_KEY";
     	  		  query+=" ,'All' as CAMPAIGN_NAME";
     	  		  query+=" from dual";
     	  		  query+=" UNION";
-    	  		  query+=" SELECT"; 
-    	  		  query+=" -2 as CALLOUT_CAMPAIGN_KEY, 1 as sq";
-    	  		  query+=" ,'Y' as CAMPAIGN_NAME";
-    	  		  query+=" from dual";
-    	  		  query+=" UNION";
-    	  		  query+=" SELECT ";
-    	  		  query+=" -3 as CALLOUT_CAMPAIGN_KEY, 2 as sq";
-    	  		  query+=",'N' as CAMPAIGN_NAME";
-    	  		  query+=" from dual";
-    	  		  query+=" UNION";
-    	  		  query+=" select dcallpro.CALLOUT_CAMPAIGN_KEY  ,3 as sq";
+    	  		  query+=" select dcallpro.CALLOUT_CAMPAIGN_KEY ";
     	  		  query+=" , dcallpro.CALLOUT_CAMPAIGN_CODE||' - '||dcallpro.CALLOUT_CAMPAIGN_NAME as CAMPAIGN_NAME";
     	  		  query+=" from DIM_CALLOUT_CAMPAIGN dcallpro";
     	  		  query+=" inner join (";
@@ -72,19 +49,18 @@ String CallOutCampaignCerateDateEndParam = request.getParameter("CallOutCampaign
     	  		  query+=" 			from FACT_CALLOUT_PROGRAM fcallpro";
 
     	  		  query+=" 			inner join DIM_DATE dd on DD.DATE_KEY = fcallpro.PROGRAM_CREATED_DATE_KEY	";
-    	  		  //query+=" 			where (DD.CALENDAR_DATE between to_date('2014-03-01','yyyy-MM-dd') and to_date('2014-03-01','yyyy-MM-dd'))";
-    	  		
+    	  		  
+    	  		//query+=" 			where (DD.CALENDAR_DATE between to_date('2014-03-01','yyyy-MM-dd') and to_date('2014-03-01','yyyy-MM-dd'))";
     	  		if(CallOutCampaignCerateDateStartParam.equals("All") || CallOutCampaignCerateDateEndParam.equals("All")){
     	  			
     	  		}else{
     	  		  query+=" 			where (DD.CALENDAR_DATE between to_date('"+CallOutCampaignCerateDateStartParam+"','yyyy-MM-dd') and to_date('"+CallOutCampaignCerateDateEndParam+"','yyyy-MM-dd'))"; 
     	  		}
-    	  		
     	  		  query+=" GROUP BY fcallpro.CALLOUT_CAMPAIGN_KEY";
     	  		  query+=" ) factcallout on factcallout.CALLOUT_CAMPAIGN_KEY = dcallpro.CALLOUT_CAMPAIGN_KEY ";
     	  		  query+=" order by CAMPAIGN_NAME";
     	  		  query+=" )CALLOUT_CAMPAIGN";
-    	  		  query+=" order by sq,CAMPAIGN_NAME";
+    	  		  query+=" order by CAMPAIGN_NAME";
     	  		
     	  		  
 		    	 

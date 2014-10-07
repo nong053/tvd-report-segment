@@ -234,8 +234,7 @@ public class connectionJNDI {
 	    }
 	 }
   
-  public void selectByIndexDwh(String query,String columns) {
-		
+  public void selectByIndexDwh(String query,String columns) { 		
 /*
 	  Context initContext = new InitialContext();
 	  Context envContext  = (Context)initContext.lookup("java:/comp/env");

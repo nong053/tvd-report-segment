@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
   <%
   tv.tvdirect.service.connectionJNDI jndi = new tv.tvdirect.service.connectionJNDI();
-  String MailCampaignParam = request.getParameter("MailCampaignParam");
+  
          
     	  //String query="SELECT current date FROM sysibm.sysdummy1";
 /*
@@ -34,7 +34,7 @@ order by MAIL_PROGRAM_Name
     	  		  query+=" UNION";
     	  		  query+=" SELECT MAIL_PROGRAM_KEY ,1 as sq , MAIL_PROGRAM_NAME";
     	  		  query+=" FROM FACT_MAIL_PROGRAM";
-    	  		  query+=" where (MAIL_CAMPAIGN_KEY in ("+MailCampaignParam+"))";
+    	  		  query+=" where (MAIL_CAMPAIGN_KEY in ('-1'))";
     	  		  query+=" GROUP by MAIL_PROGRAM_KEY , MAIL_PROGRAM_NAME";
     	  		  query+=" )MAIL_PROGRAM";
     	  		  query+=" ORDER BY sq,MAIL_PROGRAM_Name";

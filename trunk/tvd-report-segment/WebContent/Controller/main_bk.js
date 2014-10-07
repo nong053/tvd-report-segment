@@ -1,52 +1,15 @@
 
+$(document).bind("ajaxSend", function(){
+   // $("#loading").show();
+    var widthImg=(screen.availWidth/2)-50;
+	var	hieghtImg=(screen.availHeight/2)-50;
+	$("#loading").css({"top":hieghtImg+"px","left":widthImg}).show();
+	
+ }).bind("ajaxComplete", function(){
+   $("#loading").hide();
+ });
+
 $(document).ready(function(){
-	//check type segment start
-	//alert("HELLO 1");
-//	$(".segmentType").click(function(){
-//		//alert("hello 2");
-//		console.log(this.id);
-//		$("#embedSegmentType").remove();
-//		$("body").append("<input type=\"text\" id=\"embedSegmentType\" value=\""+this.id+"\">");
-//	});
-//	$(".segmentType").click();
-	//check type segment end
-	
-	var setTable = function(){
-	//set table start
-	$("table.tableParam tr").each(function(){
-		$("td:eq(0)",this).css({"text-align":"left"});
-		$("td:eq(1)",this).css({"text-align":"left"});
-		$("td:eq(2)",this).css({"text-align":"left"});
-		$("td:eq(3)",this).css({"text-align":"left"});
-		$("td:eq(4)",this).css({"text-align":"left"});
-	});
-	//set table end
-	};
-	
-	
-	$('#loading').ajaxStart(function(){
-		var widthImg=(screen.availWidth/2)-50;
-		var	hieghtImg=(screen.availHeight/2)-50;
-		$(this).css({"top":hieghtImg+"px","left":widthImg}).show();
-	 });
-	 $('#loading').ajaxComplete(function(){
-	    $(this).fadeOut();
-	 });
-	  
-	/*
-	$("#loading").ajaxStart(function(){
-		//console.log("ajaxStart");
-		var widthImg=(screen.availWidth/2)-50;
-		var	hieghtImg=(screen.availHeight/2)-50;
-		$(this).css({"top":hieghtImg+"px","left":widthImg}).show();
-	});
-	$("#loading").ajaxComplete(function(){
-		//console.log("ajaxSto");
-		$(this).hide();
-	});
-	*/
-	
-	
 	var option = new Array();
 	 /*#########################Ajax start##########################*/
 	 /*
@@ -74,26 +37,13 @@ $(document).ready(function(){
 	}); 
 	$(".ui-multiselect-header").remove();
 	 $( "button" ).button();
-	 //multiAccordion start
-	 $( "#accordion" ).multiAccordion();
-	 $(".ui-state-active .ui-icon").css({"float":"left"});
-	 $(".ui-accordion-header").click(function(){
-	 $(".ui-state-active .ui-icon").css({"float":"left"});
-	 });
-	 $(".ui-accordion-header").removeClass("ui-state-active");
-	 $(".ui-accordion-header").addClass("ui-state-default");
-	 $(".ui-accordion-content").hide();
-	 //$("#customer_info").next().show();
-	// $("#customer_info").addClass("ui-state-default ui-state-active");
-	 
-	 //multiAccordion end
-	 
-	 //$( "#accordion" ).accordion();
+	 $( "#accordion" ).accordion();
 	 $(".date").datepicker();
 	 $(".date").datepicker( "option", "dateFormat", "yy-mm-dd" );
 	 //$( ".date" ).datepicker( "option", "currentText", "All" );
 	 $(".date").val("All");
-	 
+	 $("#paramCustomerCreatedDateStart").val("2010-01-01");
+	 $("#paramCustomerCreatedDateEnd").val("2014-01-01");
 	 
 	 $( ".date" ).datepicker({ "constrainInput": "false" });
 	 
@@ -116,190 +66,486 @@ $(document).ready(function(){
 		    dd = '0' + dd;
 		}
 	var CurrentDate=""+yyyy+"-"+mm+"-"+dd+"";
-	
-	//date -3 month start
-	var minus3MonthMM=mm-3;
-	var minus3MonthYYYY="";
-		
-	if(minus3MonthMM<=0){
-		minus3MonthMM=(12+(mm-3));
-		minus3MonthYYYY=(yyyy-1);
-	}else{
-		minus3MonthMM=(mm-3);
-		minus3MonthYYYY=yyyy;
-	}
-	if (minus3MonthMM < 10) {
-		minus3MonthMM = '0' + minus3MonthMM;
-	}
-
-	
-	var CurrentDateMinus3Month=""+minus3MonthYYYY+"-"+minus3MonthMM+"-"+dd+"";
-	//date -3 month end
-	
-	//date -2 month start
-	var minus2MonthMM=mm-2;
-	var minus2MonthYYYY="";
-		
-	if(minus2MonthMM<=0){
-		minus2MonthMM=(12+(mm-2));
-		minus2MonthYYYY=(yyyy-1);
-	}else{
-		minus2MonthMM=mm-2;
-		minus2MonthYYYY=yyyy;
-	}
-	if (minus2MonthMM < 10) {
-		minus2MonthMM = '0' + minus2MonthMM;
-	}
-	var CurrentDateMinus2Month=""+minus2MonthYYYY+"-"+minus2MonthMM+"-"+dd+"";
-	//date -2 month end
-	
-	//date -1 month start
-	var minus1MonthMM=mm-1;
-	var minus1MonthYYYY="";
-		
-	if(minus1MonthMM<=0){
-		minus1MonthMM=(12+(mm-1));
-		minus1MonthYYYY=(yyyy-1);
-	}else{
-		minus1MonthMM=mm-1;
-		minus1MonthYYYY=yyyy;
-	}
-	if (minus1MonthMM < 10) {
-		minus1MonthMM = '0' + minus1MonthMM;
-	}
-	var CurrentDateMinus1Month=""+minus1MonthYYYY+"-"+minus1MonthMM+"-"+dd+"";
-	//date -1 month end
-	
-	
-	//date 1 jan current year start.
-	var JanCurrentYear = ""+yyyy+"-01-01";
-	//date 1 jan current year end.
-	
-	
-	// history contact
-	//alert("CurrentDateMinus3Month="+CurrentDateMinus3Month);
-	//alert("CurrentDateMinus2Month="+CurrentDateMinus2Month);
-	//alert("JanCurrentYear="+JanCurrentYear);
-	
-	/*
-	 $("#paramCustomerCreatedDateStart").val("1999-01-01");
-	 $("#paramCustomerCreatedDateEnd").val(CurrentDateMinus3Month);
-	 $("#paramContactDateStart").val(CurrentDateMinus1Month);
+	 // history contact
+	 
+	 $("#paramContactDateStart").val("2014-02-01");
 	 $("#paramContactDateEnd").val(CurrentDate);
-	 $("#paramNotContactDateStart").val(CurrentDateMinus1Month);
+	 $("#paramNotContactDateStart").val("2014-02-01");
 	 $("#paramNotContactDateEnd").val(CurrentDate);
-	 */
+	 
 	 //history order
-/*
-	 $("#paramInvoiceCreatedDateStart").val(CurrentDateMinus2Month);
+
+	 $("#paramInvoiceCreatedDateStart").val("2014-01-01");
 	 $("#paramInvoiceCreatedDateEnd").val(CurrentDate);
-	 $("#paramNotInvoiceCreatedDateStart").val(CurrentDateMinus2Month);
+	 $("#paramNotInvoiceCreatedDateStart").val("2014-01-01");
 	 $("#paramNotInvoiceCreatedDateEnd").val(CurrentDate);
-	 $("#paramOrderCreatedDateStart").val(CurrentDateMinus2Month);
+	 $("#paramOrderCreatedDateStart").val("2014-01-01");
 	 $("#paramOrderCreatedDateEnd").val(CurrentDate);
-	 $("#paramNotOrderCreatedDateStart").val(CurrentDateMinus2Month);
+	 $("#paramNotOrderCreatedDateStart").val("2014-01-01");
 	 $("#paramNotOrderCreatedDateStart").val(CurrentDate);
-*/	 
+	 
 	 //campaign info start
-	/*
-	 $("#paramCalloutProgramCreatedDateStart").val(JanCurrentYear);
-	 $("#paramCalloutProgramCreatedDateEnd").val(CurrentDate);
-	 */
+	 $("paramCalloutProgramCreatedDateStart").val("2014-01-01");
+	 $("paramCalloutProgramCreatedDateEnd").val(CurrentDate);
 	 //campaign info end
 	 
 	 //campaign mail start
-	/*
-	 $("#paramMailProgramCreatedDateStart").val(JanCurrentYear);
-	 $("#paramMailProgramCreatedDateEnd").val(CurrentDate);
-	 */
+	 $("paramMailProgramCreatedDateStart").val("2014-01-01");
+	 $("paramMailProgramCreatedDateEnd").val(CurrentDate);
 	 //campaign mail end
 	 //SET DATE END
+	 
+	 //function create drowdown area start
+	 var createDropdrownList = function(id,data,option){
+		 var htmlSelect="<select id=\""+id+"\" name=\""+id+"\"  class=\"mutiSelect\" multiple=\"multiple\">";
+		 if(option['filed']==2){
+		 $.each(data,function(index,indexEntry){
+			 
+			 
+				 if(indexEntry[0]=="All"){
+				 htmlSelect+="<option selected value=\""+indexEntry[0]+"\">"+indexEntry[1]+"</option>";
+				 }else{
+				 htmlSelect+="<option value=\""+indexEntry[0]+"\">"+indexEntry[1]+"</option>";
+				 }
+			
+		 });
+		 }else if(option['filed']==1){
+			 $.each(data,function(index,indexEntry){
+				 
+				 
+				 if(indexEntry[0]=="All"){
+				 htmlSelect+="<option selected value=\""+indexEntry[0]+"\">"+indexEntry[0]+"</option>";
+				 }else{
+				 htmlSelect+="<option value=\""+indexEntry[0]+"\">"+indexEntry[0]+"</option>";
+				 }
+			
+			 });
+			 
+		 }
+		 htmlSelect+="</select>";
+		 //alert(htmlSelect);
+		 //alert(option);
+		 $("td#area"+id+"").html(htmlSelect);
+		 $(".mutiSelect").multiselect({
+			   header: false
+			});
+		 
+		 
+	 };
+	 var createDropdrownListCastCase = function(id,data,option){
+		 var htmlSelect="";
+		 if(option['typeValue']=="single"){
+		 htmlSelect+="<select id=\""+id+"\" name=\""+id+"\"  class=\"singleSelect\" multiple=\"multiple\">"; 
+		 }else{
+		 htmlSelect+="<select id=\""+id+"\" name=\""+id+"\"  class=\"mutiSelect\" multiple=\"multiple\">";	 
+		 }
+		 
+		 if(option['filed']==2){
+		 $.each(data,function(index,indexEntry){
+			 
+			 
+				 if(indexEntry[0]==option['valueDefalult']){
+				 htmlSelect+="<option selected value=\""+indexEntry[0]+"\">"+indexEntry[1]+"</option>";
+				 }else{
+				 htmlSelect+="<option value=\""+indexEntry[0]+"\">"+indexEntry[1]+"</option>";
+				 }
+			
+		 });
+		 }else if(option['filed']==1){
+			 $.each(data,function(index,indexEntry){
+				 
+				 
+				 if(indexEntry[0]==option['valueDefalult']){
+				 htmlSelect+="<option selected value=\""+indexEntry[0]+"\">"+indexEntry[0]+"</option>";
+				 }else{
+				 htmlSelect+="<option value=\""+indexEntry[0]+"\">"+indexEntry[0]+"</option>";
+				 }
+			
+			 });
+			 
+		 }
+		 htmlSelect+="</select>";
+		 //alert(htmlSelect);
+		 //alert(option);
+		 $("td#area"+id+"").html(htmlSelect);
+		 $("select").multiselect({
+			   header: false
+			});
+		 
+		 
+	 };
+	 
+	 //createDropdrownList();
+	 var callAjaxForDropDrowList = function(fileName,option){
+		 $.ajax({
+			url:"../Model/"+fileName+".jsp",
+			type:"get",
+			async:false,
+			dataType:"json",
+			success:function(data){
+				createDropdrownList("param"+fileName+"",data,option);
+			}
+		 });
+	 };
+	 
+	 //CastCase DropdrownList CustomerStatus
+	 var callAjaxForDropDrowListCustomerStatus = function(fileName,option){
+		 
+		 $.ajax({
+				url:"../Model/"+fileName+".jsp",
+				type:"get",
+				async:false,
+				dataType:"json",
+				success:function(data){
+					
+					
+					createDropdrownListCastCase("param"+fileName+"",data,option);
+					option=[];
+					option['filed']=2;
+					option['parameter']="'"+$("#paramCustomerStatus option:selected").val()+"'";
+					callAjaxForDropDrowListSubStatus("CustomerSubStatus",option);
+				}
+			 });
+		 
+		 
+	 };
+	 
+	 var callAjaxForDropDrowListSubStatus = function(fileName,option){
+		 
+		 $.ajax({
+				url:"../Model/"+fileName+".jsp",
+				type:"get",
+				async:false,
+				dataType:"json",
+				data:{"CustomerStatusParam":option['parameter']},
+				success:function(data){
+					//alert(data);
+					createDropdrownList("param"+fileName+"",data,option);
+				}
+			 });
+		 
+		 
+	 };
+	 //CastCase DropdrownList CallType
+	 var callAjaxForDropDrowListCallType = function(fileName,option){
+		 
+		 $.ajax({
+				url:"../Model/"+fileName+".jsp",
+				type:"get",
+				async:false,
+				dataType:"json",
+				success:function(data){
+					createDropdrownListCastCase("param"+fileName+"",data,option);
+					option=[];
+					option['filed']=1;
+					option['parameter']="'"+$("#paramCallType option:selected").val()+"'";
+					callAjaxForDropDrowListCallAbnormolly("CallAbnormolly",option);
+				}
+			 });
+		 
+		 
+	 };
+	 
+	 var callAjaxForDropDrowListCallAbnormolly = function(fileName,option){
+		 
+		 $.ajax({
+				url:"../Model/"+fileName+".jsp",
+				type:"get",
+				async:false,
+				dataType:"json",
+				data:{"CallTypeNameParam":option['parameter']},
+				success:function(data){
+					//alert(data);
+					createDropdrownList("param"+fileName+"",data,option);
+				}
+			 });
+		 
+		 
+	 };
+	 
+	 //CastCase DropdrownList NotCallType
+	 var callAjaxForDropDrowListNotCallType = function(fileName,option){
+		 
+		 $.ajax({
+				url:"../Model/"+fileName+".jsp",
+				type:"get",
+				async:false,
+				dataType:"json",
+				success:function(data){
+					createDropdrownListCastCase("param"+fileName+"",data,option);
+					option=[];
+					option['filed']=1;
+					option['parameter']="'"+$("#paramNotCallType option:selected").val()+"'";
+					callAjaxForDropDrowListNotCallAbnormolly("NotCallAbnormolly",option);
+				}
+			 });
+		 
+		 
+	 };
+	 
+	 var callAjaxForDropDrowListNotCallAbnormolly = function(fileName,option){
+		 
+		 $.ajax({
+				url:"../Model/"+fileName+".jsp",
+				type:"get",
+				async:false,
+				dataType:"json",
+				data:{"NotCallAbnormollyParam":option['parameter']},
+				success:function(data){
+					//alert(data);
+					createDropdrownList("param"+fileName+"",data,option);
+				}
+			 });
+		 
+		 
+	 };
+	  
+	 
+	 //function create drowdown area end
+	 
+	 //function dropdown single list start
+	 	
+	 //function dropdown single list end
+	 
+	 //using parameter start
+	 
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CustomerPrefix",option);
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("CustomerType",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("Gender",option);
+	 option=[];
+	 option['filed']=2;
+	 //CastCase Start
+	 option['valueDefalult']=1;
+	 callAjaxForDropDrowListCustomerStatus("CustomerStatus",option);
+	 
+	 $("select#paramCustomerStatus").change(function(){
+		//alert("hellow"); 
+		option=[];
+		option['filed']=2;
+		var parameter="";
+		var i=0;
+		$("#paramCustomerStatus option:selected").each(function(){
+			//alert($(this).val());
+			if(i==0){
+			parameter+="'"+$(this).val()+"'";	
+			}else{
+			parameter+=",'"+$(this).val()+"'";
+			}
+			i++;
+		});
+		option['parameter']=parameter;
+		
+		callAjaxForDropDrowListSubStatus("CustomerSubStatus",option);
+	 });
+	 //CastCase End
+	 
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("BusineesType",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CustomerGrade",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CustomerSegment",option);
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("CustomerBirthMonthName",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CustomerCareer",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CreditCard",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("SMSFlag",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("PhoneFlag",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("MAILING_FLAG",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("EMAIL_FLAG",option);
+	 /*
+	 //address info
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("AccommodationType",option);
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("Province",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("AddressType",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("AddressGrade",option);
+	
+	//emp info
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("SaleRep",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("Bu",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("EmpStatus",option);
+	 
+	 //history info
+	 //CastCase Start
+	 option=[];
+	 option['filed']=1;
+	 option['valueDefalult']='All';
+	 callAjaxForDropDrowListCallType("CallType",option);
+	 $("select#paramCallType").change(function(){
+			//alert("hellow"); 
+			option=[];
+			option['filed']=1;
+			var parameter="";
+			var i=0;
+			$("#paramCallType option:selected").each(function(){
+				if(i==0){
+				parameter+="'"+$(this).val()+"'";	
+				}else{
+				parameter+=",'"+$(this).val()+"'";
+				}
+				i++;
+			});
+			option['parameter']=parameter;
+			callAjaxForDropDrowListCallAbnormolly("CallAbnormolly",option);
+		 });
+	 
+	 
+	 //CastCase End
+	 
+	 
+	 //callAjaxForDropDrowListNotCallType
+	//CastCase Start
+	 option=[];
+	 option['filed']=1;
+	 option['valueDefalult']='outbound';
+	 callAjaxForDropDrowListNotCallType("NotCallType",option);
+	 $("select#paramNotCallType").change(function(){
+			//alert("hellow"); 
+			option=[];
+			option['filed']=1;
+			var parameter="";
+			var i=0;
+			$("#paramNotCallType option:selected").each(function(){
+				if(i==0){
+				parameter+="'"+$(this).val()+"'";	
+				}else{
+				parameter+=",'"+$(this).val()+"'";
+				}
+				i++;
+			});
+			option['parameter']=parameter;
+			callAjaxForDropDrowListNotCallAbnormolly("NotCallAbnormolly",option);
+		 });
+	 
+	 
+	 //CastCase End
 	
 	 
-	 //call paramer by click header title start
+	 
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CallReson",option);
+	 
+	 //option=[];
+	 //option['filed']=1;
+	 //callAjaxForDropDrowList("CallAbnormolly",option);
+	 
+	 //option=[];
+	 //option['filed']=1;
+	 //callAjaxForDropDrowList("NotCallAbnormolly",option);
 	
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CallResultName",option);
 	 
-	 $("h3#customer_info").click(function(){
-		 if(!$(this).hasClass("clicked")){
-			 callParameterCustomerInfo(); 
-			 $(this).addClass("clicked");
-			 setTable();
-		 } 
-	 });
-	 $("h3#customer_info").trigger("click");
+	 //history order
 	 
-	 $("h3#address_info").click(function(){
-		 if(!$(this).hasClass("clicked")){
-			 callParameterAddressInfo(); 
-			 $(this).addClass("clicked");
-			 setTable();
-		 }
-		 
-	 });
-	 $("h3#employee_info").click(function(){
-		 if(!$(this).hasClass("clicked")){
-			 callParameterEmpPloyeeInfo();
-			 $(this).addClass("clicked");
-			 setTable();
-		 }
-		 
-	 });
-	 $("h3#history_contact_info").click(function(){
-		 if(!$(this).hasClass("clicked")){
-			 callParameterHitoryContactInfo(); 
-			 $(this).addClass("clicked");
-			 setTable();
-		 }
-		 
-	 });
-	 $("h3#order_info").click(function(){
-		 if(!$(this).hasClass("clicked")){
-			 callParameterHitoryOrderInfo(); 
-			 $(this).addClass("clicked");
-			 setTable();
-		 }
-		 
-	 });
-	 $("h3#history_payment_info").click(function(){
-		 if(!$(this).hasClass("clicked")){
-			 callParameterHitoryPaymentInfo(); 
-			 $(this).addClass("clicked");
-			 setTable();
-		 }
-		 
-	 });
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("SalesChannel",option);
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("OrderStatus",option);
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("ShipmentStatus",option);
 	 
-	 $("h3#campaign_info").click(function(){
-		 if(!$(this).hasClass("clicked")){
-			 callParameterCampaignInfo(); 
-			 $(this).addClass("clicked");
-			 setTable();
-		 }
-		 
-	 });
+	 //history payment
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("PaymentTerm",option);
 	 
-	 $("h3#campaign_mail_info").click(function(){
-		 if(!$(this).hasClass("clicked")){
-			 callParameterCampaignEmailInfo(); 
-			 $(this).addClass("clicked");
-			 setTable();
-		 }
-		 
-	 });
-	 
-	 $("h3#rating_info").click(function(){
-		 if(!$(this).hasClass("clicked")){
-			 callParameterRatingInfo(); 
-			 $(this).addClass("clicked");
-			 setTable();
-		 }
-		 
-	 });
-	 
-	 
-	 //call paramer by click header title end
+	 //campiagn info 
+	 option=[];
+	 option['filed']=1;
+	 option['typeValue']="single";
+	 callAjaxForDropDrowList("CalloutCampaignCreatedYear",option);
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("CalloutCampaign",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CalloutProgram",option);
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("CalloutCampaignType",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("CalloutCampaignStatus",option);
 	
-	 var getParameter = function(){
+	 //campign email
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("MailCampaignCreatedYear",option);
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("MailCampaign",option);
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("MailProgram",option);
+	 option=[];
+	 option['filed']=2;
+	 callAjaxForDropDrowList("MailCampaignType",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("MailCampaignStatus",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("MailProgramStatus",option);
+	
+	
+	 //rating info
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("ProductRatingGroup",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("Rating",option);
+	 option=[];
+	 option['filed']=1;
+	 callAjaxForDropDrowList("NotRating",option);
+	
+	 */
+	 
+	 $("#submit").click(function(){
+		 
+		
 		 var parameter="";
 		 //customer info start
 		 	parameter+="?paramCustomerCode="+$("#paramCustomerCode").val();
@@ -409,16 +655,12 @@ $(document).ready(function(){
 				parameter+="&paramProvince="+$(this).val();
 			});
 			
-			$("#paramRegion option:selected").each(function(){
-				parameter+="&paramRegion="+$(this).val();
-			});
-			/*
 			
 			parameter+="&paramRegionCode="+$("#paramRegionCode").val();
 			
 			
 			parameter+="&paramRegionName="+$("#paramRegionName").val();
-			*/
+			
 			
 			$("#paramAddressType option:selected").each(function(){
 				parameter+="&paramAddressType="+$(this).val();
@@ -573,10 +815,6 @@ $(document).ready(function(){
 			$("#paramPaymentTerm option:selected").each(function(){
 				parameter+="&paramPaymentTerm="+$(this).val();
 			});
-			
-			parameter+="&paramPaymentDateStart="+$("#paramPaymentDateStart").val();
-			parameter+="&paramPaymentDateEnd="+$("#paramPaymentDateEnd").val();
-			
 			//history payment end
 			
 			//campiagn info start
@@ -667,22 +905,6 @@ $(document).ready(function(){
 
 			//rating info end
 			
-			
-			//data limit start
-			parameter+="&paramDataLimit="+$("#paramDataLimit").val();
-			//date limit end
-			//file name start
-			parameter+="&paramFileName="+$("#paramFileName").val();
-			//file name end
-			parameter+="&paramSegmentType="+$("#embedSegmentType").val();
-			
-	 return parameter;
-	 };
-	 $("#submit").click(function(){
-		 $("#loadText").text("Runing Process ...");
-		
-		 
-		 var parameter = getParameter();
 			console.log(parameter);
 			 $.ajax({
 					url:"../Model/CheckStatusInBackground.jsp",
@@ -690,73 +912,33 @@ $(document).ready(function(){
 					async:false,
 					dataType:"json",
 					success:function(data){
-						//alert(data[0][0]);
-						//yyyy-mm-dd=1-2-0
 						
-						var startDate=data[0][0];
-						startDate=startDate.split("-");
-						var startDateTime=startDate[2].split(".");
-						var formatTimeStampDate=startDate[1]+"/"+startDateTime[0]+"/"+startDate[0]+" "+startDateTime[1]+":"+startDateTime[2]+":"+startDateTime[3]; //mm-dd-yyyy
-						var timeStampStartDate=new Date(formatTimeStampDate).getTime();
 						
-						var finishDate=data[0][1];
-						finishDate=finishDate.split("-");
-						var finishDateTime=finishDate[2].split(".");
-						var formatTimeStampFinishDate=finishDate[1]+"/"+finishDateTime[0]+"/"+finishDate[0]+" "+finishDateTime[1]+":"+finishDateTime[2]+":"+finishDateTime[3]; //mm-dd-yyyy
-						var timeStampFinishDate=new Date(formatTimeStampFinishDate).getTime();
-						
-						//alert(timeStampStartDate+"<"+timeStampFinishDate);
-						//alert(timeStampFinishDate);
-						if(timeStampStartDate <= timeStampFinishDate){
-						
+						if(data=="process_empty"){
+							//alert("ok");
+							
 							$.ajax({
 								//"url":"http://localhost:8080/pentaho/content/reporting/execute/SA_WORK/link3.html",
 								url:"http://10.10.2.62:8080/pentaho/content/reporting/execute/Segment_Report/Segment_Report.html"+parameter+"&name=Segment_Report.prpt&solution=Segment_Report&output-target=table%2Fhtml%3Bpage-mode%3Dpage&accepted-page=0&showParameters=true&renderMode=REPORT&htmlProportionalWidth=false",
 								type:"get",
 								dataType:"html",
-								async:false,
 								//data:{"paramCustomerFirstName":""+parameter+"","param_2":"test2","name":"link3.prpt","solution":"SA_WORK"},
 								success:function(data){
+									//alert(data);
 									
-									alert("Proccess is Successfully");
 								}
-							
 							});
-							//alert("Send Parameter Successfully \nPlease Check your Email about 1 Hour.");
-						
+							alert("Send Parameter successfully \nPlease Check your Email about 1 Hour.");
+							
 						}else{
-							alert("Please wait... \nProcess other is Running");
+							alert("Process is Running Plaese Wait..");
 						}
-
-						
-						
 						
 					}
 				 });
-		$("#loadText").text("Parameter Loading ...");
+		
 	 });
 	 
-	 $("#cancle").click(function(){
-			//alert("cancle"); 
-	 });
-	 $("#countData").click(function(){
-		 var parameter = getParameter();
-		 $.ajax({
-				//"url":"http://localhost:8080/pentaho/content/reporting/execute/SA_WORK/link3.html",
-				url:"http://10.10.2.62:8080/pentaho/content/reporting/execute/Segment_Report/Segment_Count.html"+parameter+"&name=Segment_Count.prpt&solution=Segment_Report&output-target=table%2Fhtml%3Bpage-mode%3Dpage&accepted-page=0&showParameters=true&renderMode=REPORT&htmlProportionalWidth=false",
-				type:"get",
-				dataType:"html",
-				async:false,
-				//data:{"paramCustomerFirstName":""+parameter+"","param_2":"test2","name":"link3.prpt","solution":"SA_WORK"},
-				success:function(data){
-
-					$("#areaResultCountData").html(data).hide();
-					//alert($("td#countData").text());
-					$("#resultCountData").text("จำนวนแถวทั้งหมด "+$("td#countData").text());
-				}
-			});			
-	});
- 
 	 
 	 /*
 	  test 2
