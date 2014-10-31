@@ -20,7 +20,6 @@ PROVINCE_CODE
 FROM DIM_ADDRESS
 )PROVINCE_CODE
 ORDER BY PROVINCE_CODE
-
 */
 String regionParam = request.getParameter("regionParam");
 
